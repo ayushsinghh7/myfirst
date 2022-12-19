@@ -12,5 +12,11 @@ tittle.style.borderBottom='solid  3px #000';
 var minititle=document.getElementById('bold')
     minititle.style.color='green';
     minititle.style.fontFamily='bold';
+   var item= document.getElementsByClassName('list-group-item');
+   item[1].style.backgroundColor='green';
+   for(var i=0;i<item.length;i++){
+    item[i].style.fontWeight='bold';
+   }
+
     
 
