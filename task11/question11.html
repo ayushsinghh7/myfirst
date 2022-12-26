@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            line-height: 1.6;
+        }
+        .container{
+            margin: auto;
+            width: 500px;
+            overflow: auto;
+            padding: 2rem 3rem;
+
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+    <form id="the-form">
+        <h1>Add user</h1>
+    <div class="m"></div>
+    <div>
+        <label for="name">Name:</label>
+    <input type="text" id="name">
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email">
+    </div>
+    <input class="b" type="submit" value="Submit">
+    </form>
+</section>
+<script>
+   
+    var names=document.querySelector('#name');
+    var ema=document.querySelector('#email');
+    var j=document.querySelector('.m');
+    var form=document.querySelector('#the-form');
+    var numb=0;
+    form.addEventListener('submit',onsubmit);
+
+function onsubmit (e) {
+    e.preventDefault();
+    
+    if(names.value===''||ema.value===''){
+       j.innerHTML='please enter all the fields' ;
+       setTimeout(() => j.remove(),3000); 
+    
+    
+    } else{
+       let newestmember={
+       user:names.value,
+       EMAIL:ema.value,
+       skill:'not found yet'
+       }
+       let my=JSON.stringify(newestmember);
+       //let ob =JSON.parse(k);
+        numb=numb+1;
+        console.log(names.value);
+        console.log(ema.value);
+        localStorage.setItem(('User'+numb),("NAME   "+names.value+"  EMAIL  "+ema.value));
+        localStorage.setItem(("k"+numb),my);
+        localStorage.setItem("newestmember",my);
+        console.log(typeof my);
+        console.log(my.skill)
+     let ob =JSON.parse(localStorage.getItem("newestmember"));
+      
+        console.log(ob.skill);
+        console.log(ob.user);
+        console.log(ob.EMAIL);
+
+        console.log(typeof ob);
+       
+
+
+    }
+}
+</script>
+</body>
+</html>
