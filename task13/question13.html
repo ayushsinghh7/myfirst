@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            line-height: 2;
+            background-color: skyblue;
+        }
+        section{
+            background-color: lightyellow;
+            padding: 2rem 3rem;
+            
+            margin: auto;
+            overflow: auto;
+           width: 400px;
+            
+        }
+        .ye{
+            background-color: lightsteelblue;
+            color: brown;
+            padding: 10%;
+            border-color:  red;
+        
+        }
+        label{
+            line-height: 1;
+        }
+        ul{
+            color: chocolate;
+            background-color: black;
+        }
+    </style>
+</head>
+
+    <body>
+        <section>
+        <form class="ye" onsubmit="saveToLocalStorage(event)">
+            <label> Name</label><br>
+            <input id='username' type="text" name="username"  required/><br>
+            <label> EmailId</label><br>
+            <input id='email' type="email" name="emailId"  required/><br>
+            <label> Phone Number</label><br>
+            <input id='phonenumber' type="tel" name="phonenumber" /><br>
+            <button> Submit </button>
+        </form>
+        <ul id='listOfUsers'></ul></section>
+        <script>
+            function saveToLocalStorage(event) {
+                event.preventDefault();
+                const name = event.target.username.value;
+                const email = event.target.emailId.value;
+                const phonenumber = event.target.phonenumber.value;
+                
+                const obj = {
+                    name,
+                    email,
+                    phonenumber
+                }
+                localStorage.setItem(obj.email, JSON.stringify(obj))
+                showNewUserOnScreen(obj)
+            }
+
+            
+
+            function showNewUserOnScreen(user){
+                document.getElementById('email').value = '';
+                document.getElementById('username').value = '';
+                document.getElementById('phonenumber').value ='';
+                // console.log(localStorage.getItem(user.emailId))
+                if(localStorage.getItem(user.email) !== null){
+                    removeUserFromScreen(user.email)
+                }
+
+                const parentNode = document.getElementById('listOfUsers');
+                const childHTML = `<li id=${user.email}> ${user.name} - ${user.email}
+                                        <button onclick=deleteUser('${user.email}')> Delete User </button>
+                                        <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}')>Edit User </button>
+                                     </li>`
+
+                parentNode.innerHTML = parentNode.innerHTML + childHTML;
+            }
+
+            
+
+            function editUserDetails(emailId, name, phonenumber){
+
+                document.getElementById('email').value = emailId;
+                document.getElementById('username').value = name;
+                document.getElementById('phonenumber').value =phonenumber;
+
+                deleteUser(emailId)
+             }
+
+            function deleteUser(emailId){
+                console.log(emailId)
+                localStorage.removeItem(emailId);
+                removeUserFromScreen(emailId);
+
+            }
+
+            function removeUserFromScreen(emailId){
+                const parentNode = document.getElementById('listOfUsers');
+                const childNodeToBeDeleted = document.getElementById(emailId);
+                if(childNodeToBeDeleted) {
+                    parentNode.removeChild(childNodeToBeDeleted)
+                }
+            }
+
+
+        </script>
+
+
+    </body>
+</html>
