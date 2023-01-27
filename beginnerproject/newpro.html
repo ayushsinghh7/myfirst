@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta Expenses="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        
+        section{
+            background-color: lightyellow;
+            padding: 2rem 3rem;
+            
+            margin: auto;
+            overflow: auto;
+           width: 400px;
+            
+        }
+        ul{
+            color: chocolate;
+            background-color: black;
+        }
+        select{
+            width: 190px;
+        }
+        
+    </style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+
+    <body style="background-color: yellowgreen">
+        <section>
+            <marquee  direction="right"><h3>Expense Calculator</h3> </marquee>
+        <form class="ye" onsubmit="saveToLocalStorage(event)">
+            <label> Expense</label><br>
+            <input id='expense' type="text" Expenses="ex"  required/><br>
+            <label> Description</label><br>
+            <input id='description' type="text" Expenses="dec"  required/><br>
+            <label> Category</label><br>
+            <select Expenses="cat" id="Category"> 
+                 <option>vaction</option>
+                <option>movie</option>
+                <option>fuel</option>
+                <option>food</option>
+             </select><br>
+            <button> AddExpense </button>
+        </form>
+        <ul id='expensedetails'></ul></section>
+        <script>
+            function saveToLocalStorage(event) {
+                event.preventDefault();
+                const Expenses= event.target.expense.value;
+                const description = event.target.description.value;
+                const Category = event.target.Category.value;
+                
+                const obj = {
+                    Expenses,
+                    description,
+                    Category
+                }
+                localStorage.setItem(obj.description, JSON.stringify(obj))
+                showNewUserOnScreen(obj)
+            }
+
+            window.addEventListener("DOMContentLoaded", () => {
+                const localStorageObj = localStorage;
+                const localstoragekeys  = Object.keys(localStorageObj)
+
+                for(var i = 0; i< localstoragekeys.length; i++){
+                    const key = localstoragekeys[i]
+                    const userDetailsString = localStorageObj[key];
+                    const userDetailsObj = JSON.parse(userDetailsString);
+                    showNewUserOnScreen(userDetailsObj)
+                }
+            })
+
+            function showNewUserOnScreen(user){
+                document.getElementById('description').value = '';
+                document.getElementById('expense').value = '';
+                document.getElementById('Category').value ='';  //id
+                // console.log(localStorage.getItem(user.descriptionId))
+                if(localStorage.getItem(user.description) !== null){
+                    removeUserFromScreen(user.description)
+                }
+
+                const parentNode = document.getElementById('expensedetails');
+                const childHTML = `<li id=${user.description}> ${user.Expenses} - ${user.description}-${user.Category}<br>
+                                        <button onclick=deleteUser('${user.description}')> Delete Expenses </button>
+                                        <button onclick=editUserDetails('${user.description}','${user.Expenses}','${user.Category}')>Edit Expenses </button>
+                                     </li>`
+
+                parentNode.innerHTML = parentNode.innerHTML + childHTML;
+            }
+
+            
+
+            function editUserDetails(descriptionId, Expenses, Category){
+
+                document.getElementById('description').value = descriptionId;  //id
+                document.getElementById('expense').value = Expenses;
+                document.getElementById('Category').value =Category;
+
+                deleteUser(descriptionId)
+             }
+
+            function deleteUser(descriptionId){
+                console.log(descriptionId)
+                localStorage.removeItem(descriptionId);
+                removeUserFromScreen(descriptionId);
+
+            }
+
+            function removeUserFromScreen(descriptionId){
+                const parentNode = document.getElementById('expensedetails');
+                const childNodeToBeDeleted = document.getElementById(descriptionId);
+                if(childNodeToBeDeleted) {
+                    parentNode.removeChild(childNodeToBeDeleted)
+                }
+            }
+
+
+        </script>
+
+
+    </body>
+</html>
