@@ -1,0 +1,147 @@
+console.log( 'person1:show ticket')
+console.log( 'person2:show ticket')
+
+const promisewifebringingticks=new Promise((resolve,reject)=>{
+  setTimeout(()=> {
+    resolve('ticket')
+  }, 1000);
+})
+const getpopcorn=promisewifebringingticks.then((t)=>{
+  //console.log(`person3:show  ${t}`)
+   console.log( 'wife: i have the ticks')
+  console.log('husband: we should go in')
+  console.log( 'wife:no i am hungry ')
+  return new Promise((resolve,reject)=>resolve(`${t} popcorn`))
+})
+const getbutter=getpopcorn.then((t)=>{
+  //console.log(`person3:show  ${t}`)
+    console.log('husband: i got some popcorn')
+  console.log('husband: we should go in')
+  console.log( 'wife:no i need butter ')
+  return new Promise((resolve,reject)=>resolve(`${t} butter`))
+})
+const getDrinks=getbutter.then((t)=>{
+  //console.log(`person3:show  ${t}`)
+    //console.log('husband: i got some popcorn')
+  //console.log('husband: we should go in')
+  //console.log( 'wife:no i need butter ')
+  console.log(`husband: i got some butter on popcorn`)
+    console.log('husband: anything else darling?')
+    console.log( 'wife:lets go we are getting late ')
+    console.log('husband: thank you for the reminder *grins*')
+    console.log( 'wife:oh wait! before going in go get some Drinks')
+    console.log( 'wife:i am thirsty')
+  return new Promise((resolve,reject)=>resolve(`${t} Drinks`))
+})
+getDrinks.then((t)=>console.log(t))
+console.log( 'person4:show ticket')
+console.log( 'person5:show ticket')
+
+//////async await for premovie///////////------///////////////////////////////////////////
+console.log( 'person1:show ticket')
+console.log( 'person2:show ticket')
+
+const premovie= async() => {
+  const promisewifebringingticks=new Promise((resolve,reject)=>{
+  setTimeout(()=> {
+    resolve('ticket')
+  }, 1000);
+  });
+  const getpopcorn=new Promise((resolve,reject)=>resolve('popcorn'))
+  const getbutter=new Promise((resolve,reject)=>resolve('butter'))
+  const getDrinks=new Promise((resolve,reject)=>resolve('Drinks'))
+  let ticks=await promisewifebringingticks;
+  console.log( `wife: i have the  ${ticks}`)
+  console.log('husband: we should go in')
+  console.log( 'wife:no i am hungry ')
+  let popcorn= await getpopcorn;
+  console.log(`husband: i got some ${popcorn}`)
+  console.log('husband: we should go in')
+  console.log( 'wife:no i need butter ')
+  
+  let butter= await getbutter;
+   console.log(`husband: i got some ${butter} on popcorn`)
+    console.log('husband: anything else darling?')
+    console.log( 'wife:lets go we are getting late ')
+    console.log('husband: thank you for the reminder *grins*')
+    let Drinks=await getDrinks;
+    console.log( 'wife:oh wait! before going in go get some Drinks')
+    console.log( 'wife:i am thirsty')
+    console.log( `husband: i have the  ${Drinks}`)
+    console.log( 'wife:lets go we are getting late ')
+    
+  return ticks;
+}
+
+
+  premovie().then((t)=>console.log(`person3:show ${t}`))
+console.log( 'person4:show ticket')
+console.log( 'person5:show ticket')
+/////////-----------async await in createpost,delete post----------------/////////////////////////
+async function createpost(){
+    const d = await new Promise((resolve,reject)=>{
+      setTimeout(()=> {
+      po.push('hi');
+      po.push("hello")
+      resolve();
+    }, 1000);
+    });
+  
+    console.log(po)
+  
+  }
+   async function deletepost(){
+    const pp= await new Promise((resolve,reject)=>{
+    setTimeout(()=> {
+       if(po.length > 0){
+       
+      const poppedElement  = po.pop();
+      resolve(poppedElement);
+     resolve();
+      }
+     },2000);
+    });
+     console.log(po)
+    return pp;
+  }
+  
+  createpost();
+  
+     deletepost();
+     deletepost();
+     
+     /////-------------async await+ promise.all in create post delete post
+     const po=[];
+
+async function createpost(){
+  const cre =  new Promise((resolve,reject)=>{
+    setTimeout(()=> {
+    po.push('hi');
+    po.push("hello")
+    po.push('how')
+    resolve();
+  }, 1000);
+  });
+
+  
+  const dele=  new Promise((resolve,reject)=>{
+  setTimeout(()=> {
+     if(po.length > 0){
+     
+    const poppedElement  = po.pop();
+    resolve(poppedElement);
+   resolve();
+    }
+   },2000);
+  });
+  let[create,del]=await Promise.all([cre,dele])
+   console.log(po)
+
+}
+
+createpost();
+  
+  
+  
+  
+  
