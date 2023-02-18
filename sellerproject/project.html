@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form class="ok" onsubmit="saveTobckend(event)">
+    Selling Price <input type="number" id="sell">
+    Product Name <input type="text" id="name">
+    <button>Add Product</button>
+    <h1>Products</h1>
+    </form>
+     <h1>Total Value Worth Of Products :</h1><h1 id="do">Rs</h1>
+    
+    <ul class="list" id="list">
+        
+    </ul>
+   
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.3/axios.min.js"></script>
+    <script>
+        function saveTobckend(event){
+            event.preventDefault();
+            const price= document.getElementById('sell').value
+            const pro=document.getElementById('name').value
+            
+            const obj = {
+                    price,
+                    pro
+                }
+               
+                axios.post("https://crudcrud.com/api/3911813c7a3b4f38a67eefe59fcfb078/productdetails",obj)
+                .then(response =>{
+                    console.log(Array.length)
+                  
+                    showNewUserOnScreen(response.data)
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+        }
+        window.addEventListener("DOMContentLoaded", () => {
+           
+                var k=axios.get("https://crudcrud.com/api/3911813c7a3b4f38a67eefe59fcfb078/productdetails")
+                .then(Response=>{
+                   
+                    console.log(Response.data)
+                    for(var i=0;i<Response.data.length;i++){
+                        
+                    showNewUserOnScreen(Response.data[i])
+                  
+                 
+                   
+                    
+                    }
+                   
+                    
+                }).catch(err=>{
+                    console.log(err)
+
+                })
+                
+            })
+            function showNewUserOnScreen(Product){
+                document.getElementById('sell').value = '';
+                document.getElementById('name').value = '';
+                
+                
+
+                const parentNode = document.getElementById('list');
+                const childHTML = `<li id=${Product._id}> ${Product.price} - ${Product.pro}
+                                        <button onclick=deleteUser('${Product._id}')> Delete User </button>
+                                        
+                                     </li>`
+                                  
+                                  var k=0;
+                                     parseInt(Product.price)
+                                     k=k+Product.price;                    
+                     showworth(' '+'Rs'+Product.price)
+                parentNode.innerHTML = parentNode.innerHTML + childHTML;
+            }
+           function showworth(productPrice){
+           document.getElementById('sell').value;
+          var v= document.getElementById('do');
+
+            v.innerHTML=v.innerHTML+productPrice;
+
+           }
+        function deleteUser(productId){
+                
+                axios.delete(`https://crudcrud.com/api/3911813c7a3b4f38a67eefe59fcfb078/productdetails/${productId}`)
+                 
+                
+                .then(response=>{
+                     removeUserFromScreen(productId);
+                  
+                }).catch(err=>{
+                    console.log(err)
+                })
+             
+
+            }
+
+            function removeUserFromScreen(productId){
+                const parentNode = document.getElementById('list');
+                const childNodeToBeDeleted = document.getElementById(productId);
+                if(childNodeToBeDeleted) {
+                    parentNode.removeChild(childNodeToBeDeleted)
+                }
+            }
+    </script>
+</body>
+</html>
