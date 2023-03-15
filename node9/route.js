@@ -50,7 +50,7 @@ const url=req.url;
                 console.log(parsedbody);
                 const message=parsedbody.split('=')[1];
                 fs.writeFile('message.txt',message,err=>{
-                
+                 
     
                   res.statusCode='302';
             res.setHeader('Location','/');
@@ -73,3 +73,12 @@ const url=req.url;
             }
         }
         module.exports=requesthandler;
+         //for multiple exporttask in one go
+        // module.exports={
+           
+        //     handler:requesthandler,
+        //     someText:'some code'
+        // }
+       // another way
+    //    module.exports.handler=requesthandler;
+    //    module.exports.someText='some code';
