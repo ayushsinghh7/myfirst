@@ -1,0 +1,32 @@
+.form-control label,
+    .form-control input{
+        display: block;
+        width: 100%;
+    }
+    .form-control{
+        margin: 1rem 0;
+    }
+    .form-control input{
+        border: 1px solid burlywood;
+        font: inherit;
+        border-radius: 2px;
+    }
+    .product-form{
+       
+        width: 20rem;
+        max-width: 90%;
+        margin: auto;
+    }
+    button{
+        font: inherit;
+        border: 1px solid burlywood;
+        background-color: white;
+        color: burlywood;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    button:hover,
+    button:active{
+        background-color: burlywood;
+        color: white;
+    }
