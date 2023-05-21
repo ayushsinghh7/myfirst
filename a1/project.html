@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+        div{
+            
+            background-color: white;
+            height: 400px;
+            width: 400px;
+           
+            justify-content: center;
+          
+            left: 500px;
+            
+            top: 90px;
+            margin: auto;
+          aspect-ratio: 2/3;
+          object-fit: contain;
+            box-shadow: 1px 0 0 10px black,
+                        0 0 0 20px white, 
+                        1px 0 0 30px black,
+                        1px 0 0 40px white,
+                        0 0 0 50px black;
+                        height: fit-content;
+                       
+        } 
+        form{
+            background-color: aqua;
+            mix-blend-mode: multiply;
+            box-shadow: 0 0 0 2px black;
+            height: fit-content;
+            width: 100%;
+            object-fit: contain;
+            
+
+        }
+        input{
+            
+            width: 90%;
+            height: 35%;
+            background-color: white;
+            box-shadow: 0 0 0 2px black;
+        }  
+        h1{
+            mix-blend-mode: luminosity;
+            background-color: aliceblue;
+            box-shadow: 0 0 0 2px black;
+        }   
+        body{
+            content: '';
+            font-size: large;
+            background-color: blueviolet;
+        }
+    #tu{
+        background-color:yellowgreen;
+        align-content: center;
+        align-items: center;
+        display: flex;
+
+    }
+   </style>
+</head>
+<body>
+     <div id="tu"> 
+    <form class="ok" onsubmit="saveTobckend(event)">
+   Enter your name <input type="text" id="sell" required><br>
+   Enter your Email  <input type="email" id="name"  required><br>
+     Enter Password<input type="password" id="cat"  required><br>
+    <button type="submit">Signup</button>
+     </form>
+     
+   
+    
+   </div>
+<button><a href="url">Existing User-Login</a></button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.3/axios.min.js"></script>
+    <script>
+       
+        
+        async function saveTobckend(event){
+           event.preventDefault();
+            const price= document.getElementById('sell').value
+            const pro=document.getElementById('name').value
+            const cat=document.getElementById('cat').value
+            
+            const obj = {
+                    price,
+                    pro,
+                    cat
+                }
+               try{
+               var response= await axios.post("http://localhost:3000/data/add-data",obj);
+                
+                    
+                    
+                }
+                catch(err){
+                    console.log(err)
+                }
+             console.log(obj)
+             document.write("succesfull")
+                
+        }
+        
+       
+
+                  
+               
+
+          
+   </script>
+</body>
+ </html>
