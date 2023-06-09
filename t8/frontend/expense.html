@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: aqua;
+        }
+         div{
+            
+            background-color: white;
+            height: 400px;
+            width: 400px;
+           
+            justify-content: center;
+          
+            left: 500px;
+            
+            top: 90px;
+            margin: auto;
+          aspect-ratio: 2/3;
+          object-fit: contain;
+            box-shadow: 1px 0 0 10px black,
+                        0 0 0 20px white, 
+                        1px 0 0 30px black,
+                        1px 0 0 40px white,
+                        0 0 0 50px black;
+                        height: fit-content;
+                       
+        } 
+         form{
+            background-color: aqua;
+            mix-blend-mode: multiply;
+            box-shadow: 0 0 0 2px black;
+            height: fit-content;
+            width: 100%;
+            object-fit: contain;
+            
+
+        }
+        input{
+            
+            width: 90%;
+            height: 35%;
+            background-color: white;
+            box-shadow: 0 0 0 2px black;
+        }  
+        section{
+            width: 90%;
+            height: 35%;
+            background-color: white;
+            box-shadow: 0 0 0 2px black;  
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <form class="ye" onsubmit="saveTobckend(event)">
+        <label> Expense</label><br>
+        <input id='expense' type="text"  required/><br>
+        <label> Description</label><br>
+        <input id='description' type="text"   required/><br>
+        <label> Category</label><br>
+        <select  id="Category"> 
+             <option>vaction</option>
+            <option>movie</option>
+            <option>fuel</option>
+            <option>food</option>
+         </select><br>
+        <button> AddExpense </button>
+    </form>
+<ul id="bata"></ul>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.3/axios.min.js"></script>
+<script>
+   
+    
+    async function saveTobckend(event){
+       event.preventDefault();
+        const Expense= document.getElementById('expense').value
+        const Desc=document.getElementById('description').value
+        const cat=document.getElementById('Category').value
+       
+        const obj = {
+                Expense,
+                Desc,
+                cat
+            }
+           try{
+            const token=localStorage.getItem('token');
+              console.log(token)
+           var response= await axios.post("http://localhost:3000/addexpense",obj,{ headers: {"Authorization" : token}});
+             showNewUserOnScreen(response.data.newUserDetail)
+           console.log(response.data.token)
+             
+                
+            }
+            catch(err){
+              
+                console.log(err)
+
+            }
+        
+         
+         
+         
+            
+    }
+    
+    window.addEventListener("DOMContentLoaded",async () => {
+
+try{
+    const token=localStorage.getItem('token')
+    console.log(token)
+const Response= await axios.get("http://localhost:3000/getexpense",{ headers: {"Authorization" : token}})
+ console.log(Response);
+var cc=0;
+var vov= document.getElementById('do');
+
+     for(let i=0;i<Response.data.all.length;i++){
+
+     showNewUserOnScreen(Response.data.all[i])
+  
+     }
+
+}catch(err){
+ console.log(err)
+}
+
+
+
+})
+function showNewUserOnScreen(expenses){
+ 
+
+
+
+ const parentNode = document.getElementById('bata');
+
+
+ const exId = `expense-${expense.id}`;
+
+ const childHTML = `<li id=${exId}>  ${expenses.Expense}-${expenses.cat}-${expenses.Desc}
+   <button onclick=deleteUser(event,${expenses.id})> Delete Product </button>
+                         
+                      </li>`
+
+
+
+
+
+
+     
+
+ parentNode.innerHTML = parentNode.innerHTML + childHTML;
+
+
+
+
+
+
+}
+async  function  deleteUser (  e, expenseid){
+    try{
+    const token = localStorage.getItem('token')
+    await  axios.delete(`http://localhost:3000/deleteexpense/${expenseid}`,  { headers: {"Authorization" : token} })
+
+      
+
+    }catch(err) {
+        console.log(err)
+    }
+}
+
+
+    
+   
+
+              
+           
+
+      
+</script>
+</body>
+</html>
